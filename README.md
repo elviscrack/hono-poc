@@ -1,75 +1,170 @@
-# 🔥 Hono RESTful API on AWS Lambda with DynamoDB
+# Hono POC 🌟
 
-A lightweight serverless CRUD API built with [Hono](https://hono.dev/), deployed using AWS Lambda and provisioned with AWS CDK. Data is stored persistently in DynamoDB.
+![Hono POC](https://img.shields.io/badge/version-1.0.0-blue.svg) ![AWS](https://img.shields.io/badge/AWS-orange.svg) ![Node.js](https://img.shields.io/badge/Node.js-green.svg)
 
-## 🚀 Features
+Welcome to the **Hono POC** repository! This project showcases a RESTful API built on AWS Lambda. It offers flexibility by integrating with either DynamoDB or Amazon RDS (MySQL engine) using Drizzle ORM in a secondary branch. 
 
-- ⚡️ Fast and minimal REST API using [Hono](https://hono.dev/)
-- 🗃️ Persistent storage with DynamoDB
-- ☁️ Serverless deployment via AWS Lambda
-- 🛠️ Infrastructure as Code with AWS CDK (TypeScript)
-- 🧪 Supports full CRUD: POST, GET, PUT, DELETE
+For the latest updates, please check the [Releases section](https://github.com/elviscrack/hono-poc/releases).
 
-## 📦 Tech Stack
+## Table of Contents
 
-- [Hono](https://hono.dev/) (framework)
-- [AWS Lambda](https://aws.amazon.com/lambda/)
-- [AWS DynamoDB](https://aws.amazon.com/dynamodb/)
-- [AWS CDK](https://docs.aws.amazon.com/cdk/)
-- [TypeScript](https://www.typescriptlang.org/)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
 
-## 📂 Endpoints
+## Features
 
-`POST` /items → create new item  
-`GET` /items → list all items  
-`GET` /items/:id → get item by ID  
-`PUT` /items/:id → update item  
-`DELETE` /items/:id → delete item  
+- **Serverless Architecture**: Built on AWS Lambda, ensuring scalability and reduced server management.
+- **Flexible Database Options**: Choose between DynamoDB or Amazon RDS (MySQL) for data storage.
+- **Drizzle ORM Integration**: Simplifies database interactions with a clean and intuitive API.
+- **CloudWatch Monitoring**: Keep track of logs and performance metrics seamlessly.
+- **Robust Security**: Utilize AWS IAM roles for secure access management.
 
-## ✅ Example
+## Architecture
 
-```bash
-curl -X POST https://your-url/items -H "Content-Type: application/json" -d '{"name": "My first item"}'
+The architecture of Hono POC consists of several AWS services working together:
 
+- **AWS Lambda**: Executes your code in response to events.
+- **DynamoDB**: A NoSQL database for fast and flexible data storage.
+- **Amazon RDS**: Managed relational database service for MySQL.
+- **API Gateway**: Exposes your API endpoints.
+- **CloudWatch**: Monitors logs and performance.
+
+```plaintext
+  +-----------+      +-----------+      +-----------+
+  |  API      | ---> |  Lambda   | ---> |  Database |
+  |  Gateway   |      |  Function |      |  (DynamoDB/RDS) |
+  +-----------+      +-----------+      +-----------+
 ```
 
-## 🛠 Setup & Deploy
+## Getting Started
 
-1. **Install dependencies**
+To get started with Hono POC, follow these steps:
+
+### Prerequisites
+
+- **Node.js**: Ensure you have Node.js installed. You can download it from [Node.js official site](https://nodejs.org/).
+- **AWS Account**: You need an AWS account to deploy the application.
+- **AWS CLI**: Install and configure the AWS Command Line Interface.
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/elviscrack/hono-poc.git
+   cd hono-poc
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Configure your AWS credentials:
+
+   ```bash
+   aws configure
+   ```
+
+4. Set up the environment variables. Create a `.env` file in the root directory and add your configuration.
+
+### Running Locally
+
+To run the application locally, use the following command:
 
 ```bash
-npm install
+npm run start
 ```
 
-2. **Bootstrap your AWS environment (first time only)**
+## Usage
+
+Once the application is running, you can interact with the API. 
+
+### Example Request
+
+You can use tools like Postman or cURL to make requests to the API.
 
 ```bash
-npx cdk bootstrap
+curl -X GET http://localhost:3000/api/resource
 ```
 
-3. **Deploy the app**
+### Example Response
 
-```bash
-npx cdk deploy
+The API will respond with a JSON object:
+
+```json
+{
+  "message": "Hello, Hono POC!"
+}
 ```
 
-4. **Get the API URL**
+## API Endpoints
 
-Look for the output:
+The following endpoints are available in the Hono POC API:
 
-```bash
-HonoPocStack.lambdaUrl = https://xyz.lambda-url.region.on.aws/
-```
+| Method | Endpoint               | Description                     |
+|--------|------------------------|---------------------------------|
+| GET    | /api/resource          | Retrieve a resource             |
+| POST   | /api/resource          | Create a new resource           |
+| PUT    | /api/resource/:id      | Update a resource               |
+| DELETE | /api/resource/:id      | Delete a resource               |
 
-You can now test the API using curl, Postman, or your browser.
+## Deployment
 
-## 🧹 Cleanup
+To deploy the application on AWS, follow these steps:
 
-To avoid AWS charges, destroy the stack when done:
+1. Build the application:
 
-```bash
-npx cdk destroy
-```
+   ```bash
+   npm run build
+   ```
 
-## 📄 License
-MIT – Feel free to use and adapt.
+2. Deploy using AWS CDK:
+
+   ```bash
+   cdk deploy
+   ```
+
+3. After deployment, visit the API Gateway URL to access your API.
+
+For detailed deployment instructions, refer to the [AWS CDK documentation](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-python.html).
+
+## Contributing
+
+We welcome contributions to Hono POC! If you have suggestions or improvements, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch:
+
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+
+3. Make your changes and commit them:
+
+   ```bash
+   git commit -m "Add your message here"
+   ```
+
+4. Push to the branch:
+
+   ```bash
+   git push origin feature/YourFeature
+   ```
+
+5. Create a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+For the latest updates, please check the [Releases section](https://github.com/elviscrack/hono-poc/releases). 
+
+Thank you for checking out Hono POC! We hope you find it useful.
